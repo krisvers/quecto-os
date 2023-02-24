@@ -5,11 +5,15 @@ init:
 	mov bp, 0x9000
 	mov sp, bp
 
-	mov al, 0x02
+	mov ah, 0x02
+	mov al, 0x10
 	mov ch, 0x00
 	mov cl, 0x02
 	mov dh, 0x00
+	xor bx, bx
+	mov es, bx
 	mov bx, kernel_begin
+	
 	call disk_read
 
 	call switch_32
@@ -21,7 +25,7 @@ init:
 
 [bits 32]
 begin_32:
-	jmp [kernel_begin]
+	jmp dword 0x8:kernel_begin
 	jmp $
 
 kernel_begin equ 0x1000
